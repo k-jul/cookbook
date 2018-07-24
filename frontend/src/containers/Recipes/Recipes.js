@@ -1,23 +1,22 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Container, Input, Card, Rating, Button } from 'semantic-ui-react';
+import { Container, Input, Card, Button } from 'semantic-ui-react';
 
-import {getAllRecipes} from './RecipesActions';
+import { getAllRecipes } from './RecipesActions';
+import { updateReceipt } from '../ReceiptEdit/ReceiptEditActions';
+import getRecipeCard from '../../components/recipeCard';
 import './Recipes.css';
 
-const getRecipeCard = (recipe) =>
-    <Card key={recipe._id} className="receipt_card">
-        <Card.Content>
-            <Card.Header>{recipe.title}</Card.Header>
-            <Card.Meta><Rating  icon='star' defaultRating={recipe.rating} maxRating={5}/></Card.Meta>
-            <Card.Description>{recipe.description}</Card.Description>
-        </Card.Content>
-    </Card>
+const filterFunction = inputValue => elem =>
+    new RegExp(inputValue, 'i').test(elem.title)
+    || new RegExp(inputValue, 'i').test(elem.description);
 
-const filterFunction = inputValue => elem => 
-    elem.title.toLowerCase().includes(inputValue.toLowerCase()) 
-    || elem.description.toLowerCase().includes(inputValue.toLowerCase())
+const comparatorFn = (a, b) => {
+    const rateA = a.rating || 0;
+    const rateB = b.rating || 0;
+    return rateB - rateA;
+}
 
 class Recipes extends Component {
     constructor(props) {
@@ -40,16 +39,19 @@ class Recipes extends Component {
      
     }
 
-
     render() {
         return <Container>
             <main className="main">
                 <Input fluid icon='search' placeholder='Search...' className="search" onInput={evt => this.setState({
                     inputValue: evt.target.value
                 })}/>
-                <Button positive>Add</Button>
+                <Button positive onClick={() => this.props.history.push('/recipes/new')}>Add</Button>
                 <Card.Group centered>
-                {this.state.searchResult.length && this.state.searchResult.filter(filterFunction(this.state.inputValue)).map(getRecipeCard)}
+                {this.state.searchResult.length
+                    && this.state.searchResult
+                            .filter(filterFunction(this.state.inputValue))
+                            .sort(comparatorFn)
+                            .map(getRecipeCard(this.props.actions.updateReceipt))}
                 </Card.Group>
             </main>
         </Container>
@@ -57,7 +59,6 @@ class Recipes extends Component {
 }
 
 const mapStateToProps = state => {
-    console.log(state, 'state....')
     return {
         recipes: state.recipesReducer.recipes
     }
@@ -65,7 +66,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        actions: bindActionCreators({getAllRecipes}, dispatch)
+        actions: bindActionCreators({ getAllRecipes, updateReceipt }, dispatch)
     }
 }
 

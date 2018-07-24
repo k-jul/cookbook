@@ -3,8 +3,8 @@ import {connect} from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Container } from 'semantic-ui-react';
 
-import {getReceiptById, updateReceipt} from './ReceiptEditActions';
-import './ReceiptEdit.css';
+import {getReceiptById} from '../ReceiptEdit/ReceiptEditActions';
+import './ReceiptView.css';
 
 
 class ReceiptEdit extends Component {
@@ -12,7 +12,7 @@ class ReceiptEdit extends Component {
         super(props);
 
         this.state = {
-            initialString: 'edit receipt',
+            initialString: 'View receipt',
         }
     }
 
@@ -22,20 +22,20 @@ class ReceiptEdit extends Component {
 
     render() {
         return <Container>
-            {this.props.editReceipt.currentReceipt.title}
+            {this.props.viewReceipt.currentReceipt.title}
         </Container>
     }
 }
 
 const mapStateToProps = state => {
     return {
-        editReceipt: state.receiptEditReducer
+        viewReceipt: state.receiptViewReducer
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        actions: bindActionCreators({getReceiptById, updateReceipt}, dispatch)
+        actions: bindActionCreators({getReceiptById}, dispatch)
     }
 }
 

@@ -7,25 +7,25 @@ function getAll() {
         .catch(console.error);
 }
 
-function getRecipe(id) {
+function getReceipt(id) {
     return axios.get(BACKEND_URL + id)
         .then(response => response.data)
         .catch(console.error);
 }
 
-function addRecipe(body) {
+function addReceipt(body) {
     return axios.post(BACKEND_URL, body)
         .then(response => response.data)
         .catch(console.error);
 }
 
-function updateRecipe(id, body) {
-    return axios.put(BACKEND_URL + id, body)
+function updateReceipt(data) {
+    return axios.patch(BACKEND_URL + data._id, data)
         .then(response => response.data)
         .catch(console.error);
 }
 
-function deleteRecipe(id) {
+function deleteReceipt(id) {
     return axios.delete(BACKEND_URL + id)
         .then(response => response.data)
         .catch(console.error);
@@ -33,8 +33,8 @@ function deleteRecipe(id) {
 
 export {
     getAll,
-    getRecipe,
-    addRecipe,
-    updateRecipe,
-    deleteRecipe
+    getReceipt,
+    addReceipt,
+    updateReceipt,
+    deleteReceipt
 }

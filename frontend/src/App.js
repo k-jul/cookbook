@@ -6,8 +6,9 @@ import {Route, Switch, Redirect} from 'react-router-dom';
 import history from './store/history';
 import createStore from './store';
 import Recipes from './containers/Recipes/Recipes';
-// import ReceiptEdit from './containers/ReceiptEdit/ReceiptEdit';
-// import ReceiptNew from './containers/ReceiptNew/ReceiptNew';
+import ReceiptEdit from './containers/ReceiptEdit/ReceiptEdit';
+import ReceiptNew from './containers/ReceiptNew/ReceiptNew';
+import ReceiptView from './containers/ReceiptView/ReceiptView'
 
 const store = createStore();
 
@@ -18,9 +19,10 @@ class App extends Component {
         <ConnectedRouter history={history}>
           <Switch>
             <Route path='/' exact render={() => <Redirect to='recipes'/>}/>
+            <Route path='/recipes/new' component={ReceiptNew}/>
+            <Route path='/recipes/edit/:id' component={ReceiptEdit}/>
+            <Route path='/recipes/view/:id' component={ReceiptView} />
             <Route path='/recipes' component={Recipes}/>
-            {/* <Route path='/recipes/edit/:id' component={ReceiptEdit}/>
-            <Route path='/recipes/new' component={ReceiptNew}/> */}
           </Switch>
         </ConnectedRouter>
       </Provider>

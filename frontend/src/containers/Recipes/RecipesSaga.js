@@ -1,6 +1,6 @@
 import { takeLatest, put, call, all } from "redux-saga/effects";
 // import { getAllRecipes } from "./RecipesActions";
-import {getAll} from './RecipesApi'
+import {getAll} from '../../api';
 
 
 function* fetchAll (action) {
