@@ -1,0 +1,15 @@
+.main {
+    padding: 20px 50px;
+}
+
+.search {
+    margin-bottom: 40px;
+}
+
+.receipt_card {
+    cursor: pointer;
+}
+
+.receipt_card:hover {
+    box-shadow: 1px 2px 9px -2px !important;
+}

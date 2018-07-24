@@ -1,19 +1,29 @@
+import {Provider} from 'react-redux';
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import {ConnectedRouter} from 'connected-react-router';
+import {Route, Switch, Redirect} from 'react-router-dom';
+
+import history from './store/history';
+import createStore from './store';
+import Recipes from './containers/Recipes/Recipes';
+// import ReceiptEdit from './containers/ReceiptEdit/ReceiptEdit';
+// import ReceiptNew from './containers/ReceiptNew/ReceiptNew';
+
+const store = createStore();
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>
+      <Provider store={store}>
+        <ConnectedRouter history={history}>
+          <Switch>
+            <Route path='/' exact render={() => <Redirect to='recipes'/>}/>
+            <Route path='/recipes' component={Recipes}/>
+            {/* <Route path='/recipes/edit/:id' component={ReceiptEdit}/>
+            <Route path='/recipes/new' component={ReceiptNew}/> */}
+          </Switch>
+        </ConnectedRouter>
+      </Provider>
     );
   }
 }
