@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Container, Input, Card, Rating } from 'semantic-ui-react';
+import { Container, Input, Card, Rating, Button } from 'semantic-ui-react';
 
 import {getAllRecipes} from './RecipesActions';
 import './Recipes.css';
@@ -15,13 +15,17 @@ const getRecipeCard = (recipe) =>
         </Card.Content>
     </Card>
 
+const filterFunction = inputValue => elem => 
+    elem.title.toLowerCase().includes(inputValue.toLowerCase()) 
+    || elem.description.toLowerCase().includes(inputValue.toLowerCase())
+
 class Recipes extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            initialString: 'hello',
-            currentRecipe: {}
+            searchResult: [],
+            inputValue: ''
         }
     }
 
@@ -29,12 +33,23 @@ class Recipes extends Component {
         this.props.actions.getAllRecipes()
     }
 
+    componentWillReceiveProps(nextProps) {
+        this.setState({
+            searchResult: nextProps.recipes
+        })
+     
+    }
+
+
     render() {
         return <Container>
             <main className="main">
-                <Input fluid icon='search' placeholder='Search...' className="search"/>
+                <Input fluid icon='search' placeholder='Search...' className="search" onInput={evt => this.setState({
+                    inputValue: evt.target.value
+                })}/>
+                <Button positive>Add</Button>
                 <Card.Group centered>
-                    {this.props.recipes.length && this.props.recipes.map(getRecipeCard)}
+                {this.state.searchResult.length && this.state.searchResult.filter(filterFunction(this.state.inputValue)).map(getRecipeCard)}
                 </Card.Group>
             </main>
         </Container>
