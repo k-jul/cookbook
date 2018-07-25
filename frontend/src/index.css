@@ -3,3 +3,24 @@ body {
   padding: 0;
   font-family: sans-serif;
 }
+
+.card-header {
+  display: flex !important;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.icon-group {
+  min-width: 75px;
+  margin-left: 10px;
+}
+
+.card-icon {
+  cursor: pointer;
+  opacity: .8 !important;
+}
+
+.card-icon:hover {
+  opacity: 1 !important;
+}
+

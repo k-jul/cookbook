@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Container, Input, Card, Button } from 'semantic-ui-react';
 
-import { getAllRecipes } from './RecipesActions';
+import { getAllRecipes, deleteReceipt } from './RecipesActions';
 import { updateReceipt } from '../ReceiptEdit/ReceiptEditActions';
 import getRecipeCard from '../../components/recipeCard';
 import './Recipes.css';
@@ -26,17 +26,27 @@ class Recipes extends Component {
             searchResult: [],
             inputValue: ''
         }
+
+        this.deleteHandler = this.deleteHandler.bind(this);
+        this.editHandler = this.editHandler.bind(this);
     }
 
     componentWillMount() {
-        this.props.actions.getAllRecipes()
+        this.props.actions.getAllRecipes();
     }
 
     componentWillReceiveProps(nextProps) {
         this.setState({
             searchResult: nextProps.recipes
-        })
-     
+        });
+    }
+
+    deleteHandler(id) {
+        this.props.actions.deleteReceipt(id);
+    }
+
+    editHandler(id) {
+        this.props.action.editHandler(id);
     }
 
     render() {
@@ -45,13 +55,17 @@ class Recipes extends Component {
                 <Input fluid icon='search' placeholder='Search...' className="search" onInput={evt => this.setState({
                     inputValue: evt.target.value
                 })}/>
-                <Button positive onClick={() => this.props.history.push('/recipes/new')}>Add</Button>
+                <Button className='add-btn' positive onClick={() => this.props.history.push('/recipes/new')}>Add</Button>
                 <Card.Group centered>
                 {this.state.searchResult.length
                     && this.state.searchResult
                             .filter(filterFunction(this.state.inputValue))
                             .sort(comparatorFn)
-                            .map(getRecipeCard(this.props.actions.updateReceipt))}
+                            .map(getRecipeCard(
+                                this.props.actions.updateReceipt,
+                                this.deleteHandler,
+                                this.props.history
+                                ))}
                 </Card.Group>
             </main>
         </Container>
@@ -66,7 +80,11 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        actions: bindActionCreators({ getAllRecipes, updateReceipt }, dispatch)
+        actions: bindActionCreators({
+            getAllRecipes,
+            updateReceipt,
+            deleteReceipt
+        }, dispatch)
     }
 }
 

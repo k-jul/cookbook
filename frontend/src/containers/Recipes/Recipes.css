@@ -3,13 +3,13 @@
 }
 
 .search {
-    margin-bottom: 40px;
-}
-
-.receipt_card {
-    cursor: pointer;
+    margin-bottom: 10px;
 }
 
 .receipt_card:hover {
     box-shadow: 1px 2px 9px -2px !important;
+}
+
+.add-btn {
+    margin-bottom: 20px !important;
 }
