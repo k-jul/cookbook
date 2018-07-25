@@ -1,8 +1,9 @@
 import React from 'react';
 import { Card, Rating, Icon } from 'semantic-ui-react';
 
-export default (changeRating, deleteHandler, history) => recipe =>
-    <Card key={recipe._id} className="receipt_card">
+
+export default (changeRating, deleteHandler, history) => recipe => 
+    <Card fluid key={recipe._id} className="receipt_card">
     <Card.Content>
         <Card.Header className='card-header'>
             <span className='card-title'>{recipe.title}</span>
@@ -15,7 +16,7 @@ export default (changeRating, deleteHandler, history) => recipe =>
                 />
                 <Icon
                     className='card-icon'
-                    color='gray'
+                    color='grey'
                     name='edit'
                     onClick={() => history.push('/recipes/edit/' + recipe._id)}
                 />

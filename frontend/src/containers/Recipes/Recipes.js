@@ -57,8 +57,9 @@ class Recipes extends Component {
                 })}/>
                 <Button className='add-btn' positive onClick={() => this.props.history.push('/recipes/new')}>Add</Button>
                 <Card.Group centered>
-                {this.state.searchResult.length
-                    && this.state.searchResult
+                {this.state.searchResult.length === 0
+                    ? <h2>There are no receipts...</h2>
+                    : this.state.searchResult
                             .filter(filterFunction(this.state.inputValue))
                             .sort(comparatorFn)
                             .map(getRecipeCard(

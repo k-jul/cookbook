@@ -32,7 +32,6 @@ class ReceiptNew extends Component {
 
     onSubmit() {
         if (this.state.title && this.state.description)
-            console.log(this.actions, 'this.actions')
             this.props.actions.addNewReceipt({
                 title: this.state.title,
                 description: this.state.description
@@ -48,7 +47,7 @@ class ReceiptNew extends Component {
 
     render() {
         return <Container>
-                <Header size='large'>Add new receipt</Header>
+                <Header className='mt_20' size='large'>Add new receipt</Header>
                 <Form>
                     <Form.Group widths='equal'>
                     <Form.Field

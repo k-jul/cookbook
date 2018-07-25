@@ -16,6 +16,11 @@ const receiptEditReducer = (state = initialState, action) => {
                 ...state,
                 currentReceipt: action.payload
             }
+        case 'SWITCH_ADDED_UPDATE':
+            return {
+                ...state,
+                updatedSuccess: action.payload
+            }
         default: return state;
     }
 }

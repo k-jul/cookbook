@@ -4,6 +4,10 @@ body {
   font-family: sans-serif;
 }
 
+textarea {
+  min-height: 350px !important;
+}
+
 .card-header {
   display: flex !important;
   justify-content: space-between;
@@ -24,3 +28,6 @@ body {
   opacity: 1 !important;
 }
 
+.mt_20 {
+  margin-top: 20px !important;
+}

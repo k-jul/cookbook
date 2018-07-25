@@ -13,7 +13,7 @@ const receiptNewReducer = (state = initialState, action) => {
         case 'SWITCH_ADDED':
             return {
                 ...state,
-                addedSuccess: false
+                addedSuccess: action.payload
             }
         default: return state;
     }
